@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>越野赛事医疗保障指挥系统</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">⛰️ 越野赛事医疗保障指挥系统</div>
+  <div class="clock"><span id="clock">--:--</span> <small>赛事时间</small></div>
+  <div class="stats" id="stats"></div>
+  <div class="controls">
+    <button id="btn-start">▶ 开始仿真</button>
+    <button id="btn-pause">⏸ 暂停</button>
+    <button id="btn-reset">↺ 重置</button>
+    <select id="speed">
+      <option value="30">30×</option>
+      <option value="60" selected>60×</option>
+      <option value="120">120×</option>
+      <option value="300">300×</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section class="map-panel">
+    <canvas id="map" width="820" height="760"></canvas>
+    <div class="legend">
+      <span><i class="dot normal"></i>正常</span>
+      <span><i class="dot warn"></i>警戒</span>
+      <span><i class="dot crit"></i>危急</span>
+      <span><i class="zone-legend warning"></i>危险路段</span>
+      <span><i class="zone-legend critical"></i>极危路段</span>
+      <span><b>＋</b>救护点</span>
+      <span><b>◈</b>检录点</span>
+    </div>
+    <div id="rider-card" class="rider-card hidden"></div>
+  </section>
+
+  <section class="side">
+    <div class="alerts">
+      <h2>告警与派单 <small id="alert-count"></small></h2>
+      <div id="alert-list" class="alert-list"></div>
+    </div>
+    <div class="feed">
+      <h2>实时事件流</h2>
+      <div id="feed-list" class="feed-list"></div>
+    </div>
+  </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
