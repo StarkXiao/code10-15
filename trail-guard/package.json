@@ -1,0 +1,13 @@
+{
+  "name": "trail-guard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "越野赛事保障系统：绑定选手定位与检录数据，进入危险路段或配速异常时自动呼叫最近救护点",
+  "engines": { "node": ">=20.11" },
+  "scripts": {
+    "start": "node src/server/index.js",
+    "dev": "node --watch src/server/index.js",
+    "test": "node --test"
+  }
+}

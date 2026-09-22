@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>五云岭越野赛事保障指挥台</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🏔</span>
+      <div>
+        <h1>五云岭越野赛事保障指挥台</h1>
+        <div class="sub">21K 山地越野 · 定位检录一体化 · 危险路段/配速异常自动呼叫救护</div>
+      </div>
+    </div>
+    <div class="clockbox">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="clock-sub"><span id="race-status">未发枪</span></div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 左：选手名单 -->
+    <section class="panel runners-panel">
+      <div class="panel-head">
+        <h2>选手 <small id="runner-count"></small></h2>
+        <div class="legend">
+          <span><i class="dot racing"></i>比赛中</span>
+          <span><i class="dot finished"></i>完赛</span>
+          <span><i class="dot dnf"></i>退赛</span>
+          <span><i class="dot alert"></i>告警中</span>
+        </div>
+      </div>
+      <div class="runner-list" id="runner-list"></div>
+    </section>
+
+    <!-- 中：战术地图 -->
+    <section class="panel map-panel">
+      <div class="panel-head">
+        <h2>赛道态势</h2>
+        <div class="map-legend">
+          <span><i class="sw danger"></i>危险路段</span>
+          <span><i class="sw station"></i>救护点</span>
+          <span><i class="sw cp"></i>检查点</span>
+        </div>
+      </div>
+      <canvas id="map"></canvas>
+      <div class="controls">
+        <button class="btn primary" id="btn-start">▶ 发枪开赛</button>
+        <div class="speed-group" id="speed-group">
+          <button data-speed="1">1×</button>
+          <button data-speed="60">60×</button>
+          <button data-speed="180" class="on">180×</button>
+          <button data-speed="480">480×</button>
+        </div>
+        <button class="btn ghost" id="btn-reset">↺ 重置演练</button>
+      </div>
+      <div class="hint" id="sim-hint">发枪后将以赛钟 180× 推演：A004 许岩将进入崖壁危险区 · A005 王蔓途中抽筋停滞 · A006 孙迟掉速面临关门</div>
+    </section>
+
+    <!-- 右：告警与操作 -->
+    <section class="panel side-panel">
+      <div class="tabs">
+        <button class="tab on" data-tab="alerts">告警派单 <b id="alert-badge">0</b></button>
+        <button class="tab" data-tab="ops">检录/绑定</button>
+        <button class="tab" data-tab="log">事件流</button>
+      </div>
+
+      <div class="tab-page on" id="tab-alerts">
+        <div id="alert-list" class="alert-list"></div>
+      </div>
+
+      <div class="tab-page" id="tab-ops">
+        <div class="ops-block">
+          <h3>设备绑定</h3>
+          <p class="muted">定位设备与选手 bib 绑定后，设备上报即自动归因。</p>
+          <div class="row"><label>选手</label><select id="bind-bib"></select></div>
+          <div class="row"><label>设备号</label><input id="bind-device" placeholder="如 GT-2099" /></div>
+          <button class="btn primary small" id="btn-bind">绑定 / 更新</button>
+        </div>
+        <div class="ops-block">
+          <h3>手动检录打卡</h3>
+          <div class="row"><label>选手</label><select id="ci-bib"></select></div>
+          <div class="row"><label>检查点</label><select id="ci-cp"></select></div>
+          <div class="row"><label>方式</label>
+            <select id="ci-method"><option value="manual">人工检录</option><option value="rfid">RFID</option><option value="volunteer">志愿者代录</option></select>
+          </div>
+          <button class="btn primary small" id="btn-checkin">提交检录</button>
+        </div>
+        <div class="ops-block">
+          <h3>设备定位上报（模拟真实设备 HTTP）</h3>
+          <pre class="curl">POST /api/ping
+{"deviceId":"GT-1004","lng":120.061,"lat":30.244}</pre>
+        </div>
+      </div>
+
+      <div class="tab-page" id="tab-log">
+        <div id="event-log" class="event-log"></div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="beep" preload="auto">
+    <source src="data:audio/wav;base64,UklGRlwGAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YRAGAAAA" type="audio/wav" />
+  </audio>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
